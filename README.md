@@ -32,22 +32,23 @@ Does exactly as the Darwin script above does but instead uses the bulletin SYSTE
 
 ### Additions
 
-In addition to the above script installing the agents, it also copied a vbscript to a scripts folder folder for vRA Guest Agent. This script I wrote to manage local user accounts settings and passwords. Its has a bunch of switches that allow you to automatically add user to admin groups and administer the admin account. This is especially useful during vRA deployment. 
+In addition to the above script installing the agents, it also creates a script folder and copies a vbscript (UserAndGroupControl.vbs) to it under c:\vRAGuestAgent folder. This script I wrote to manage local user accounts settings and passwords. Its has a bunch of switches that allow you to automatically add user to the local administrators group and configure the local administrator account.  
 
-To do this:
- - create a property for each business group (bg.security.group) that is the same as an AD security group. 
- - create a property definition for setting the windows password (windows.os.password)
- - create a Property group:
+This is especially useful during vRA deployment:
+ - Create a property for each business group or whereever (eg: bg.security.group = <domain>\<SecurityGroup>) that has a value of an AD security group. 
+ - Create a property definition for setting the windows password (windows.os.password)
+ - Create a Property group:
 
         VirtualMachine.Software0.Name = UserAndGroupControl
         VirtualMachine.Customize.WaitComplete = True
         VirtualMachine.Software0.ScriptPath = cscript c:\VRMGuestAgent\scripts\UserAndGroupControl.vbs /admin:newadmin /password:{windows.os.password} /group:{bg.security.group} /user:{Owner}
         VirtualMachine.Admin.UseGuestAgent = True
 
+ - Make sure the values for the switches /password and /group should match property definition with squiggly brackets {}
  - Use the /admin switch to configure the admin account name based on what the vm has (eg. newadmin)
- - in the blueprint, add the windows password property, with show in request enabled, to the virtual machine custom properties. 
- - in the blueprint, add the UserAndGroupControl property group to the virtual machine property group section. 
- - in the blueprint, configure the VM so it joins the domain (cloneSpec)
+ - In the blueprint, add the windows password property, with show in request enabled, to the virtual machine custom properties. 
+ - In the blueprint, add the UserAndGroupControl property group to the virtual machine property group section. 
+ - In the blueprint, configure the VM so it joins the domain (cloneSpec)
  - Publish and Entitle the blueprint
  - Request the item, and if done correctly the password and security group will be passed during deployment, changing the load admin password and adding the group. 
  - If you need to debug the UserAndGroupControl vbscript, use the /debug switch. The log is place right next to the script and will display the password in plain text. 
