@@ -34,17 +34,14 @@ Does exactly as the Darwin script above does but instead uses the bulletin SYSTE
 
 In addition to the above script installing the agents, it also copied a vbscript to a scripts folder folder for vRA Guest Agent. This script I wrote to manage local user accounts settings and passwords. Its has a bunch of switches that allow you to automatically add user to admin groups and administer the admin account. This is especially useful during vRA deployment. 
 
-To do this
+To do this:
  - create a property for each business group (bg.security.group) that is the same as an AD security group. 
  - create a property definition for setting the windows password (windows.os.password)
  - create a Property group:
 
         VirtualMachine.Software0.Name = UserAndGroupControl
-	
         VirtualMachine.Customize.WaitComplete = True
-	
         VirtualMachine.Software0.ScriptPath = cscript c:\VRMGuestAgent\scripts\UserAndGroupControl.vbs /admin:newadmin /password:{windows.os.password} /group:{bg.security.group} /user:{Owner}
-	
         VirtualMachine.Admin.UseGuestAgent = True
 
  - Use the /admin switch to configure the admin account name based on what the vm has (eg. newadmin)
@@ -59,7 +56,8 @@ To do this
 **UninstallAgent.bat**
 
  1. Change the variables in the top section of the script for fqdn and wsus info
-This script will remove the old Agents if they exists and delete their folders. SHould be ran before any other if doing a cleanup
+ 
+This script will remove the old Agents if they exists and delete their folders. Should be ran before any other if doing a cleanup
 It will also remove the Darwin account. However since the Darwin account was running as a service, it is considered to be in use even thought the active service has been removed. So there will be a residual folder residing in C:\Users folder. The InstallAgentAsDarwin.bat script will clean that up before creating a new Darwin account. 
 
 **InstallUpdatesOnly.bat**
