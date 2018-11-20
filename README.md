@@ -39,12 +39,10 @@ To do this
  - create a property definition for setting the windows password (windows.os.password)
  - create a Property group:
 
-    
     VirtualMachine.Software0.Name = UserAndGroupControl
     VirtualMachine.Customize.WaitComplete = True
     VirtualMachine.Software0.ScriptPath = cscript c:\VRMGuestAgent\scripts\UserAndGroupControl.vbs /admin:newadmin /password:{windows.os.password} /group:{bg.security.group} /user:{Owner}
     VirtualMachine.Admin.UseGuestAgent = True
-    
 
  - Use the /admin switch to configure the admin account name based on what the vm has (eg. newadmin)
  - in the blueprint, add the windows password property, with show in request enabled, to the virtual machine custom properties. 
