@@ -28,7 +28,7 @@ ECHO	³									³
 ECHO	ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÙ
 ECHO.
 ECHO Powershell is out-of-date, current version is: !PSVersion!
-powershell.exe -noprofile -executionPolicy bypass -file "%~dp0scripts\Install-WMF5.1.ps1" -UpdatesPath "%~dp0scripts\Updates" -AcceptEULA -AllowRestart
+powershell.exe -noprofile -executionPolicy bypass -file "%~dp0scripts\Install-WMF5.1.ps1" -UpdatesPath "%~dp0Updates" -AcceptEULA -AllowRestart
 
 :UPDATES
 CLS

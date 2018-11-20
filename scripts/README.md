@@ -1,8 +1,9 @@
 # Extract vRA PowerShell script from appliance for these files:
-curl.exe
+`curl.exe
 openssl.exe
 prepare_vra_template.bat
 prepare_vra_template.ps1
+`
 
 Also need LGPO.exe for WSUS policy configurations
 
@@ -11,12 +12,17 @@ To get the PowerShell script to properly submit using Darwin's user-name and pas
 
 Line: 549
 From 
+
 	`if ($NonInteractive)`
+	
 to
+
 	`
 	if ($NonInteractive -and !$SoftwarePassword)
 	`
+	
 The add a second Else statement in betweenthe else around line: 553
+	
 	`
 	elseif($SoftwarePassword)
     {
